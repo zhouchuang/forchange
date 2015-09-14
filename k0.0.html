@@ -12,10 +12,13 @@
 				<li class="testLi">312</li>
 				<li class="testLi">11</li>
 				<li class="testLi">12</li>
-				<li class="testLi">12</li>
-			
 				<li class="testLi">312</li>
-				
+				<li class="testLi">11</li>
+				<li class="testLi">12</li>
+				<li class="testLi">312</li>
+				<li class="testLi">312</li>
+				<li class="testLi">11</li>
+				<li class="testLi">12</li>
 			</ul>
 		</div>
 		<b class="one-b"></b>
@@ -56,41 +59,8 @@
 							this.length = elm.length;
 							return this;
 						}
-					},
-					css : function(attr,val) {//链式测试
-						console.log(this.length);
-						for(var i = 0;i < this.length; i++) {
-							if(arguments.length == 1) {
-								return getComputedStyle(this[i],null)[attr];
-							} 
-							this[i].style[attr] = val;
-						}
-						return this;
-					},
-					hasClass : function(cls) {
-						var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
-						for (var i = 0; i < this.length; i++) {
-							if (this[i].className.match(reg)) return true
-								return false;
-						}
-						return this;
-					},
-					addClass : function(cls) {
-						var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
-						for (var i = 0; i < this.length; i++) {
-							if(!this[i].className.match(reg))
-								this[i].className += ' ' + cls;
-						}
-						return this;
-					},
-					removeClass : function(cls) {
-						var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
-						for (var i = 0; i < this.length; i++) {
-							if (this[i].className.match(reg)) 
-								this[i].className = this[i].className.replace(' ' + cls,'');
-						}
-						return this;
 					}
+					
 				}
 				kodo.prototype.init.prototype = kodo.prototype;
 				
