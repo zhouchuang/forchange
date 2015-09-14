@@ -24,11 +24,11 @@
 			(function(window,document) {
 				var w = window,
 					doc = document;
-				var kodo = function(selector) {
-					return new kodo.prototype.init(selector);
+				var Kodo = function(selector) {
+					return new Kodo.prototype.init(selector);
 				}
-				kodo.prototype = {
-					constructor : kodo,
+				Kodo.prototype = {
+					constructor : Kodo,
 					length : 0,
 					splice: [].splice,
 					selector : '',
@@ -92,22 +92,16 @@
 						return this;
 					}
 				}
-				kodo.prototype.init.prototype = kodo.prototype;
+				Kodo.prototype.init.prototype = Kodo.prototype;
 				
-				kodo.ajax = function() { //直接挂载方法  可k.ajax调用
+				Kodo.ajax = function() { //直接挂载方法  可k.ajax调用
 					console.log(this);
 				}
 				
-				window.k = kodo;
+				window.f = Kodo;
 			})(window,document);
 			
-			console.time('get');
-			console.log(document.getElementById("box"))
-			console.timeEnd('get');
-			
-			console.time('query');
-			console.log(document.querySelectorAll("#box"))
-			console.timeEnd('query');
+			console.log(f('li'))
 			
 		</script>
 	</body>
