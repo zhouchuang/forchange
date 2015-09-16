@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="box" style="color: red;">
+			<ul>
+				<li class="testLi">11</li>
+				<li class="testLi">12</li>
+				<li class="testLi">312</li>
+				<li class="testLi">11</li>
+				<li class="testLi">12</li>
+				<li class="testLi">12</li>
+			
+				<li class="testLi">312</li>
+				
+			</ul>
+		</div>
+		<b class="one-b"></b>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		<script type="text/javascript">
+			(function(window,document) {
+				var w = window,
+					doc = document;
+				
+				var Kodo = function(selector) {
+					return new Kodo.prototype.init(selector);
+				}
+				Kodo.prototype = {
+					constructor : Kodo,
+					length : 0,
+					splice: [].splice,
+					selector : '',
+					init : function(selector) {//dom选择的一些判断
+						if(!selector) { return this; }
+						
+						var selector = selector.trim(),
+							elm;
+							
+						if (selector.charAt(0) == '#' && !selector.match('\\s')) {
+							selector = selector.substring(1);
+							this.selector = selector;
+							elm = document.getElementById(selector);
+							
+							this[0] = elm;
+							this.length = 1;
+							return this;
+						} else {
+							elm = document.querySelectorAll(selector);
+							for (var i = 0; i < elm.length; i++) {
+								this[i] = elm[i];
+							}
+							
+							this.selector = selector;
+							this.length = elm.length;
+							return this;
+						}
+					},
+					css : function(attr,val) {//链式测试
+						console.log(this.length);
+						for(var i = 0;i < this.length; i++) {
+							if(arguments.length == 1) {
+								return getComputedStyle(this[i],null)[attr];
+							} 
+							this[i].style[attr] = val;
+						}
+						return this;
+					},
+					hasClass : function(cls) {
+						var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+						for (var i = 0; i < this.length; i++) {
+							if (this[i].className.match(reg)) return true
+								return false;
+						}
+						return this;
+					},
+					addClass : function(cls) {
+						var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+						for (var i = 0; i < this.length; i++) {
+							if(!this[i].className.match(reg))
+								this[i].className += ' ' + cls;
+						}
+						return this;
+					},
+					removeClass : function(cls) {
+						var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+						for (var i = 0; i < this.length; i++) {
+							if (this[i].className.match(reg)) 
+								this[i].className = this[i].className.replace(' ' + cls,'');
+						}
+						return this;
+					},
+					next : function() {
+						return sibling(this[0], "nextSibling");
+					},
+					prev : function() {
+						return sibling(this[0], "previousSibling");
+					}
+				}
+				Kodo.prototype.init.prototype = Kodo.prototype;
+				
+				Kodo.ajax = function() { //直接挂载方法  可k.ajax调用
+					console.log(this);
+				}
+				
+				function sibling(cur, dir) {
+				  while ((cur = cur[dir]) && cur.nodeType !== 1) {}
+				  return cur;
+				}
+				
+				window.f = Kodo;
+			})(window,document);
+			
+			console.log(f('li'))
+			
+		</script>
+	</body>
+</html>
