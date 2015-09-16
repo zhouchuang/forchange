@@ -32,7 +32,7 @@
 					constructor : Kodo,
 					length : 0,
 					splice: [].splice,
-					selector : '',
+					selector : '1',
 					init : function(selector) {//dom选择的一些判断
 						if(!selector) { return this; }
 						
@@ -97,7 +97,29 @@
 					},
 					prev : function() {
 						return sibling(this[0], "previousSibling");
+					},
+					parent : function() {
+						var parent = this[0].parentNode;
+						parent && parent.nodeType !== 11 ? parent : null;
+						var a = Kodo();
+							a[0] = parent;
+							a.selector = parent.tagName.toLocaleLowerCase();
+							a.length = 1;
+ 						return a;
+					},
+					parents : function() {
+						var a = Kodo(),
+							i = 0;
+					    while ( (this[0] = this[0][ 'parentNode' ]) && this[0].nodeType !== 9 ) {
+					      if ( this[0].nodeType === 1 ) {
+					        a[i] = this[0];
+					        i++;
+					      }
+					    }
+					    a.length = i;
+					    return a;
 					}
+					
 				}
 				Kodo.prototype.init.prototype = Kodo.prototype;
 				
@@ -114,6 +136,7 @@
 			})(window,document);
 			
 			console.log(f('li'))
+			
 			
 		</script>
 	</body>
