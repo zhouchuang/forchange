@@ -17,14 +17,38 @@
 			<ul>
 				<li>pox</li>
 				<li>pox</li>
+				<li>pox</li><li>pox</li>
+				<li>pox</li>
+				<li>pox</li><li>pox</li>
+				<li>pox</li>
+				<li>pox</li><li>pox</li>
+				<li>pox</li>
+				<li>pox</li><li>pox</li>
+				<li>pox</li>
+				<li>pox</li><li>pox</li>
+				<li>pox</li>
+				<li>pox</li><li>pox</li>
+				<li>pox</li>
+				<li>pox</li><li>pox</li>
+				<li>pox</li>
+				<li>pox</li><li>pox</li>
+				<li>pox</li>
+				<li>pox</li><li>pox</li>
+				<li>pox</li>
+				<li>pox</li><li>pox</li>
+				<li>pox</li>
+				<li>pox</li><li>pox</li>
+				<li>pox</li>
 				<li>pox</li>
 			</ul>
+		
 		</div>
 		
 		<div class="test">
 			<b>123</b>
 		</div>
 		<div class="test">
+			<span class="test-span"></span>
 			<b>321</b>
 		</div>
 		<b class="one-b"></b>
@@ -79,11 +103,6 @@
 							return this;
 						}
 					},
-					find : function(selector) {
-						if(!selector) return;
-						var context = this.selector;
-						return new Kodo(context + ' ' + selector);
-					},
 					css : function(attr,val) {//链式测试
 						console.log(this.length);
 						for(var i = 0;i < this.length; i++) {
@@ -118,6 +137,34 @@
 						}
 						return this;
 					},
+					///////////////////
+					///////新增////////
+					///////////////////
+					find : function(selector) {
+						if(!selector) return;
+						var context = this.selector;
+						return new Kodo(context + ' ' + selector);
+					},
+					first : function() {
+						return new Kodo(this[0])
+					},
+					last : function() {
+						var num = this.length - 1;
+						return new Kodo(this[num]);
+					},
+					eq : function(num) {
+						var num = num < 0 ? (this.length - 1) : num;
+						console.log(num);
+						return new Kodo(this[num]);
+					},
+					get : function(num) {
+						var num = num < 0 ? (this.length - 1) : num;
+						console.log(num);
+						return this[num];
+					},
+					///////////////////
+					///////新增////////
+					///////////////////
 					next : function() {
 						return sibling(this[0], "nextSibling");
 					},
@@ -154,7 +201,14 @@
 					console.log(this);
 				}
 				Kodo.ready = function(fn) {
-					doc.addEventListener('DOMContentLoaded',fn,false);
+					// 修改
+					
+					doc.addEventListener('DOMContentLoaded',function() {
+						fn && fn();
+					},false);
+					doc.removeEventListener('DOMContentLoaded',fn,false);
+					
+					// 修改
 				}
 				Kodo.each = function(obj,callback) {
 					var len = obj.length,
@@ -189,6 +243,18 @@
 				window.f = Kodo;
 			})(window,document);
 			
+			
+			
+			f(function() {
+				console.log(1);
+			})
+			
+			function domReady(fn) {
+				document.addEventListener('DOMContentLoaded',function() {
+					fn && fn();
+				},false);
+				document.removeEventListener('DOMContentLoaded',fn,false);
+			}
 		</script>
 	</body>
 </html>
