@@ -245,7 +245,7 @@
 					}
 					xhr.send(options.data ? options.data : null);
 					
-					function onStateChange(a) {
+					function onStateChange() {
 						if (xhr.readyState == 4) {
 							var result,
 								status = xhr.status;
