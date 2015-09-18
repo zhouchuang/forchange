@@ -252,11 +252,6 @@
 								
 							if ((status >= 200 && status < 300) || status == 304) {
 								result = xhr.responseText;
-								if (window.JSON) {
-									result = JSON.parse(result);
-								} else {
-									result = eval('(' + result + ')');
-								}
 								ajaxSuccess(result, xhr)
 							} else {
 								console.log("ERR", xhr.status);
