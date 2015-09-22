@@ -1,9 +1,9 @@
 /*
  *  传入 dom和回调函数即可
- *  fn返回一个this参数，指向当前触发的dom对象
+ *  fn返二个参数 指向被触发的dom，和当前构造函数
  */
 function Touchevent(dom, fn) {
-	this.dom = dom;
+	this.dom = dom; //当前的dom
 	this.touchObj = {
 		pageX: 0,
 		pageY: 0,
@@ -11,21 +11,24 @@ function Touchevent(dom, fn) {
 		clientY: 0,
 		distanceX: 0,
 		distanceY: 0,
-		time: 0
 	};
+	this.isTap = false; //用来判断是否为tap
+	this.time = 0; //记录点击的时间间隔 
 	this.operate(fn);
 }
 Touchevent.prototype.operate = function(fn) {
-	var _this = this,
-		touchObj = _this.touchObj; //缓存touchObj
+	var touchObj = this.touchObj, //缓存touchObj
+		isTap = this.isTap,
+		_this = this;
 	this.dom.addEventListener('touchstart', function(e) {
 		var touches = e.touches[0];
+		console.log(isTap);
 		//赋值手指初始位置
 		touchObj.pageX = touches.pageX;
 		touchObj.pageY = touches.pageY;
 		touchObj.clientX = touches.clientX;
 		touchObj.clientY = touches.clientY;
-		touchObj.time = +new Date();
+		_this.time = +new Date();
 	}, false);
 	this.dom.addEventListener('touchmove', function(e) {
 		var touches = e.touches[0];
@@ -35,15 +38,21 @@ Touchevent.prototype.operate = function(fn) {
 	}, false);
 	this.dom.addEventListener('touchend', function(e) {
 		var touches = e.touches[0];
-		var time = +new Date() - touchObj.time;
+		var time = +new Date() - _this.time;
 		//当手指触摸时间＜150和位移小于2px则为tap事件
 		if (time < 150 && Math.abs(touchObj.distanceX) < 2 && Math.abs(touchObj.distanceY) < 2) {
-			console.log('tap啦啦啦啦啦～～～');
-			touchObj.distanceX = 0;
-			touchObj.distanceY = 0;
-			//返回个参数 指向被触发的dom
-			fn.call(null, this);
-		} else {
+			isTap = true;
+			if (isTap) {
+				console.log('tap啦啦啦啦啦～～～');
+				touchObj.distanceX = 0;
+				touchObj.distanceY = 0;
+				//返二个参数 指向被触发的dom，和当前构造函数
+				setTimeout(function() {
+					isTap = false;
+					fn.call(null, _this.dom, _this);
+				}, 50);
+			}
+		} else { //否则为滑动或者双击
 			console.log('我被移动了，不是tap了');
 			touchObj.distanceX = 0;
 			touchObj.distanceY = 0;
