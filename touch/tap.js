@@ -1,11 +1,11 @@
 /*	
  * 	直接
- * 	 touchModule(dom,function(target,module) {
+ * 	 touchModule(dom,function(target,touchPlace) {
  * 			
  * 	  })
  *  即可调用
  *  传入 dom和回调函数即可
- *  fn返二个参数 指向被触发的dom，和当前构造函数
+ *  fn返二个参数 指向被触发的dom，和触摸位置的一些参数
  */
 
 (function(window) {
@@ -59,7 +59,7 @@
 					//返二个参数 指向被触发的dom，和当前构造函数
 					setTimeout(function() {
 						isTap = false;
-						fn.call(null, _this.dom, _this);
+						fn.call(null, _this.dom, touchObj);
 					}, 50);
 				}
 			} else { //否则为滑动或者双击
