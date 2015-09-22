@@ -43,7 +43,7 @@
 		<script type="text/javascript">
 			 /*
 			  *  传入 dom和回调函数即可
-			  *  fn返回一个this参数，指向当前触发的dom对象
+			  *  fn返二个参数 指向被触发的dom，和当前构造函数
 			  */
 			function Touchevent(dom, fn) {
 				this.dom = dom; //当前的dom
@@ -89,7 +89,7 @@
 							console.log('tap啦啦啦啦啦～～～');
 							touchObj.distanceX = 0;
 							touchObj.distanceY = 0;
-							//返回个参数 指向被触发的dom 
+							//返二个参数 指向被触发的dom，和当前构造函数
 							setTimeout(function() {
 								isTap = false;
 								fn.call(null, _this.dom,_this);
@@ -106,6 +106,7 @@
 			var pbox = document.getElementById("p");
 			for (var i = 0; i < lis.length; i++) {
 				new Touchevent(lis[i],function(target,toucher) {
+					//target为当前dom对象，toucher为构造函数对象
 					var ps = document.createElement("p");
 					ps.innerHTML = target.innerHTML;
 					console.log(toucher);
