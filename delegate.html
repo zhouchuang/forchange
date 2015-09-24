@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>事件模块测试</title>
+		<meta charset="utf-8">
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	</head>
+	<body>
+		
+		<div id="box">
+			<div class="classA">
+				<div class="classB">
+					<ul>
+						<li>lilili</li>
+						<li>lilili</li>
+						<li><span>我是深层的span</span></li>
+					</ul>
+				</div>
+				<span>123</span>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var body = document.querySelector("body");
+			body.addEventListener('click',function(e) { 
+				var target = e.target;
+				var ctarget = e.currentTarget;
+				while(1) {  
+					//这个坑！ 感谢剧中人大大拉我出来！
+					//默默的就要丢出他的链接！
+					//https://github.com/bh-lay
+					delegate('.classB ul li span',target,function() {
+						console.log('我是深层的span');
+					});
+					target = target.parentNode;
+					if (target == ctarget) {
+						return;
+					}
+				}
+			},false);
+			function delegate(selector,target,fn) {
+				//为了复杂的选择器实现
+				var nodes = document.querySelectorAll(selector);
+				for (var i = 0; i < nodes.length; i++) {
+					if (nodes[i] == target) {
+						fn.call(nodes[i]);
+					}
+				}
+			}
+		</script>
+	</body>
+</html>
