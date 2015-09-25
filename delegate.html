@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>事件模块测试</title>
+		<title>复杂事件代理实现机制</title>
 		<meta charset="utf-8">
 		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<style type="text/css">
+			#box {
+				background: blue;
+			}
+		</style>
 	</head>
 	<body>
 		
@@ -16,38 +22,50 @@
 						<li><span>我是深层的span</span></li>
 					</ul>
 				</div>
-				<span>123</span>
+				<span>kodo</span>
 			</div>
 		</div>
+		
 		<script type="text/javascript">
 			var body = document.querySelector("body");
-			$("body").on('click','.classB',function(e) {
-				console.log(e,this);
+			var box = document.getElementById("box");
+			$("#box").on('touchstart','.classA',function(e) {
+				console.log(e);
 			})
-			delegate(body,'touchstart','.classB',function(e) {
-				console.log(e,this);
+//			$("body").on('touchmove','#box',function(e) {
+//				console.log(e);
+//			})
+//			$("body").on('touchend','#box',function(e) {
+//				console.log(e);
+//			})
+			delegate(box,'click','.classA',function(e) {
+//				console.log(e,this);
 			})
+//			delegate(box,'touchmove','.classA',function(e) {
+//				console.log(e,this);
+//			})
+//			delegate(box,'touchend','.classA',function(e) {
+//				console.log(e,this);
+//			})
+			
 			function delegate(agent,type,selector,fn) {
 				//为了复杂的选择器实现
 				agent.addEventListener(type,function(e) {
 					var target = e.target;
 					var ctarget = e.currentTarget;
-					while(1) {  
-						//这个坑！ 感谢剧中人大大拉我出来！
-						//默默的就要丢出他的链接！
-						//https://github.com/bh-lay
-						filiter(selector,target,e);
+					console.log(target,ctarget)
+					do {
+						if(filiter(agent,selector,target,e)) {
+							fn.call(target,e);
+						};
 						target = target.parentNode;
-						if (target == ctarget) {
-							return;
-						}
-					}
+					} while(bubble && target != ctarget)
 				},false);
-				function filiter(selector,target,e) {
-					var nodes = document.querySelectorAll(selector);
+				function filiter(agent,selector,target,e) {
+					var nodes = agent.querySelectorAll(selector);
 					for (var i = 0; i < nodes.length; i++) {
 						if (nodes[i] == target) {
-							fn.call(nodes[i],e);
+							return true;
 						}
 					}
 				}
