@@ -39,6 +39,7 @@
 //				console.log(e);
 //			})
 			delegate(box,'click','.classA',function(e) {
+				console.log(e);
 //				console.log(e,this);
 			})
 //			delegate(box,'touchmove','.classA',function(e) {
@@ -59,7 +60,7 @@
 							fn.call(target,e);
 						};
 						target = target.parentNode;
-					} while(bubble && target != ctarget)
+					} while(target != ctarget)
 				},false);
 				function filiter(agent,selector,target,e) {
 					var nodes = agent.querySelectorAll(selector);
