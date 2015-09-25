@@ -12,7 +12,6 @@
 		</style>
 	</head>
 	<body>
-		
 		<div id="box">
 			<div class="classA">
 				<div class="classB">
@@ -25,42 +24,53 @@
 				<span>kodo</span>
 			</div>
 		</div>
-		
+		<div class="btn-wrap">
+	        <button class="btn-test">.btn-test</button>
+	        <button class="btn-with-event-bubbling">.btn-with-event-bubbling</button>
+	        <button class="btn-clear">.btn-clear</button>
+	    </div>
 		<script type="text/javascript">
 			var body = document.querySelector("body");
 			var box = document.getElementById("box");
-			$("#box").on('touchstart','.classA',function(e) {
-				console.log(e);
-			})
-//			$("body").on('touchmove','#box',function(e) {
-//				console.log(e);
-//			})
-//			$("body").on('touchend','#box',function(e) {
-//				console.log(e);
-//			})
-			delegate(box,'click','.classA',function(e) {
-				console.log(e);
-//				console.log(e,this);
-			})
-//			delegate(box,'touchmove','.classA',function(e) {
-//				console.log(e,this);
-//			})
-//			delegate(box,'touchend','.classA',function(e) {
-//				console.log(e,this);
-//			})
 			
+			/**
+			 *  delegate实现与jQuery实现，冒泡target对比测试
+			 */
+			
+			$("body").on('click','.btn-with-event-bubbling',function(e) {
+				console.log(e);
+				e.stopPropagation();
+				console.log(e.currentTarget,'--------currentTarget');
+			})
+			$("body").on('click','.btn-wrap',function(e) {
+				//jq的事件代理  e.currentTarget 指向的是 .btn-wrap
+				console.log('jq冒泡触发');
+			})
+			delegate(body,'click','.btn-with-event-bubbling',function(e) {
+				console.log(e.currentTarget,'--------currentTarget');
+				return false;
+			});
+			delegate(body,'click','.btn-wrap',function(e) {
+				console.log('delegate冒泡触发');
+				//delegate事件代理  e.currentTarget 指向的是 body
+			});
+			/**
+			 * delegate实现与jQuery实现，冒泡target对比测试
+			 *   结果相同
+			 */
 			function delegate(agent,type,selector,fn) {
 				//为了复杂的选择器实现
 				agent.addEventListener(type,function(e) {
 					var target = e.target;
 					var ctarget = e.currentTarget;
-					console.log(target,ctarget)
-					do {
+					var bubble = true;
+					while(bubble && target != ctarget) {
 						if(filiter(agent,selector,target,e)) {
-							fn.call(target,e);
+							bubble = fn.call(target,e);
 						};
 						target = target.parentNode;
-					} while(target != ctarget)
+						return bubble;
+					}
 				},false);
 				function filiter(agent,selector,target,e) {
 					var nodes = agent.querySelectorAll(selector);
