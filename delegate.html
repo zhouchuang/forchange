@@ -67,14 +67,14 @@
 					 */
 					
 					while(bubble && target != ctarget) {
-						if(filiter(agent,selector,target,e)) {
+						if(filiter(agent,selector,target)) {
 							bubble = fn.call(target,e);
 						};
 						target = target.parentNode;
 						return bubble;
 					}
 				},false);
-				function filiter(agent,selector,target,e) {
+				function filiter(agent,selector,target) {
 					var nodes = agent.querySelectorAll(selector);
 					for (var i = 0; i < nodes.length; i++) {
 						if (nodes[i] == target) {
