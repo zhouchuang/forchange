@@ -24,39 +24,35 @@
 				<span>kodo</span>
 			</div>
 		</div>
+		<div class="stop">
+			<a href="www.baidu.com">www.baidu.com</a>
+		</div>
 		<div class="btn-wrap">
 	        <button class="btn-test">.btn-test</button>
 	        <button class="btn-with-event-bubbling">.btn-with-event-bubbling</button>
 	        <button class="btn-clear">.btn-clear</button>
 	    </div>
 		<script type="text/javascript">
-			var body = document.querySelector("body");
-			var box = document.getElementById("box");
-			
 			/**
-			 *  delegate实现与jQuery实现，冒泡target对比测试
-			 */
-			
-			$("body").on('click','.btn-with-event-bubbling',function(e) {
-				console.log(e);
-				e.stopPropagation();
-				console.log(e.currentTarget,'--------currentTarget');
-			})
-			$("body").on('click','.btn-wrap',function(e) {
-				//jq的事件代理  e.currentTarget 指向的是 .btn-wrap
-				console.log('jq冒泡触发');
-			})
-			delegate(body,'click','.btn-with-event-bubbling',function(e) {
-				console.log(e.currentTarget,'--------currentTarget');
-				return false;
-			});
-			delegate(body,'click','.btn-wrap',function(e) {
-				console.log('delegate冒泡触发');
-				//delegate事件代理  e.currentTarget 指向的是 body
-			});
-			/**
-			 * delegate实现与jQuery实现，冒泡target对比测试
-			 *   结果相同
+			 * @param {Object} agent 委托的dom对象
+			 * @param {String} type  事件类型
+			 * @param {String} selector 被委托对象 可是复杂选择器
+			 * @param {Function} fn  回调
+			 * @description 
+			 * 	事件委托的小实现
+			 *  delegate实现与jQuery实现，冒泡target对比测试,结果相同
+			 *  delegate实现与jQuery实现,判断是否阻止默认事件,结果相同
+			 * @example
+			 * 	var body = document.querySelector("body");
+			 *  delegate(body,'click','.stop a',function(e) {
+			 *		e.preventDefault();  阻止默认事件
+			 *		console.log(e.target);
+			 * 		console.log(e.currentTarget); 
+			 * 		！！！！currentTarget 返回结果与jq不同！！！！
+			 *       jq返回的为 .stop下的 a 对象
+			 * 		 delegate 返回为 body 对象
+			 * 		return false; 阻止冒泡
+			 *	})
 			 */
 			function delegate(agent,type,selector,fn) {
 				//为了复杂的选择器实现
@@ -64,6 +60,12 @@
 					var target = e.target;
 					var ctarget = e.currentTarget;
 					var bubble = true;
+					
+					/**
+					 *   感谢剧中人大大的指点
+					 *   https://github.com/bh-lay
+					 */
+					
 					while(bubble && target != ctarget) {
 						if(filiter(agent,selector,target,e)) {
 							bubble = fn.call(target,e);
@@ -81,6 +83,60 @@
 					}
 				}
 			}
+			
+			
+			
+			var body = document.querySelector("body");
+			var box = document.getElementById("box");
+			
+			/**
+			 *  delegate实现与jQuery实现,判断是否阻止默认事件
+			 */
+			$("body").on('click','.stop a',function(e) {
+				e.preventDefault();
+				console.log('判断是否阻止默认事件');
+				console.log(e.currentTarget);
+			});
+			delegate(body,'click','.stop a',function(e) {
+				e.preventDefault();
+				console.log('判断是否阻止默认事件');
+			})
+			/**
+			 *  delegate实现与jQuery实现,判断是否阻止默认事件
+			 *  结果相同
+			 */
+			
+			
+			/**
+			 *  delegate实现与jQuery实现，冒泡target对比测试,阻止默认事件对比
+			 */
+			$("body").on('click','.btn-with-event-bubbling',function(e) {
+				console.log(e.target,'JQ---target');
+				console.log(e.currentTarget,'JQ---currentTarget');
+				return false;
+			});
+			$("body").on('click','.btn-wrap',function(e) {
+				//jq的事件代理  e.currentTarget 指向的是 .btn-wrap
+				console.log(e.target,'JQ---target');
+				console.log(e.currentTarget,'JQ---currentTarget');
+				console.log('jq冒泡触发');
+			});
+			delegate(body,'click','.btn-with-event-bubbling',function(e) {
+				console.log(e.currentTarget,'--------currentTarget');
+				console.log(e.target,'delegate---target');
+				console.log(e.currentTarget,'delegate---currentTarget');
+				return false;
+			});
+			delegate(body,'click','.btn-wrap',function(e) {
+				console.log('delegate冒泡触发');
+				console.log(e.target,'delegate---target');
+				console.log(e.currentTarget,'delegate---currentTarget');
+				//delegate事件代理  e.currentTarget 指向的是 body
+			});
+			/**
+			 * delegate实现与jQuery实现，冒泡target对比测试
+			 *   结果相同
+			 */
 		</script>
 	</body>
 </html>
