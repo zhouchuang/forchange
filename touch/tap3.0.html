@@ -250,10 +250,17 @@
 						module.trigger(touchObj.status, e);
 					}
 				}
-				//把3个状态提取出来
-				window.touchModule = function(root, selector, fn) {
-					return new Touchmodule(root, selector, fn);
-				};
+				
+				if (typeof define === 'function' && (define.amd || define.cmd)) {
+			        define(function() {
+			        		return new Touchmodule(root, selector, fn);
+			        });
+			    } else {
+			        window.touchModule = function(root, selector, fn) {
+						return new Touchmodule(root, selector, fn);
+					};
+			    }
+			    
 			})(window, undefined);
 			//第一个参数为代理元素 必须为id 第二个参数为触发对象 第三个参数是回调	
 			touchModule('#box','li',function(e,touchObj) {

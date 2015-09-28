@@ -5,7 +5,6 @@
  *  @param {function} fn
  *
  *  @example  事件代理例子 !!!!!第一个参数仅支持id!!!!!!
- * 
  *  touchModule('#box','li',function(e,touchObj) {
  *		console.log(this.innerHTML); //this为dom对象
  * 		console.log(touchObj);//滑动返回对象
@@ -166,25 +165,32 @@
 	}
 
 	function touchEnd(e, target, touchObj, module, fn) {
-			var touches = e.touches[0];
-			var time = +new Date() - module.time;
-			//当手指触摸时间＜150和位移小于2px则为tap事件
-			if (time < 150 && Math.abs(touchObj.distanceX) < 2 && Math.abs(touchObj.distanceY) < 2) {
-				isTap = true;
-				if (isTap) {
-					touchObj.status = 'tap';
-					//返二个参数 指向被触发的dom，和当前构造函数
-					setTimeout(function() {
-						isTap = false;
-						fn.call(module, e, touchObj);
-					}, 30);
-				}
-			} else { //否则为滑动或者双击，双击暂不想做
-				module.trigger(touchObj.status, e);
+		var touches = e.touches[0];
+		var time = +new Date() - module.time;
+		//当手指触摸时间＜150和位移小于2px则为tap事件
+		if (time < 150 && Math.abs(touchObj.distanceX) < 2 && Math.abs(touchObj.distanceY) < 2) {
+			isTap = true;
+			if (isTap) {
+				touchObj.status = 'tap';
+				//返二个参数 指向被触发的dom，和当前构造函数
+				setTimeout(function() {
+					isTap = false;
+					fn.call(module, e, touchObj);
+				}, 30);
 			}
+		} else { //否则为滑动或者双击，双击暂不想做
+			module.trigger(touchObj.status, e);
 		}
-		//把3个状态提取出来
-	window.touchModule = function(root, selector, fn) {
-		return new Touchmodule(root, selector, fn);
-	};
+	}
+
+	if (typeof define === 'function' && (define.amd || define.cmd)) {
+		define(function() {
+			return new Touchmodule(root, selector, fn);
+		});
+	} else {
+		window.touchModule = function(root, selector, fn) {
+			return new Touchmodule(root, selector, fn);
+		};
+	}
+
 })(window, undefined);
