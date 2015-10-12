@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title></title>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		<style type="text/css">
+			
+		</style>
+	</head>
+	<body id="body">
+		<button id="btn">新增一个li</button>
+		<script type="text/javascript">
+			$("#btn").click(function() {
+				$("#box ul").append('<li class="testLi">15</li>');
+			})
+		</script>
+		<div id="box" style="color: red;">
+			<ul>
+				<li class="testLi">11</li>
+				<li class="testLi">12</li>
+				<li class="testLi">13</li>
+				<li class="testLi">14</li>
+			</ul>
+		</div>
+		<div id="pox">
+			<ul>
+				<li>pox</li>
+				<li>pox</li>
+				<li>pox</li><li>pox</li>
+				<li>pox</li>
+			</ul>
+		
+		</div>
+		
+		<div class="test">
+			<b>123</b>
+		</div>
+		<div class="test">
+			<span class="test-span"></span>
+			<b>321</b>
+		</div>
+		<b class="one-b"></b>
+		<script src="js/k1.0.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			
+			
+			var body = document.getElementById("body");
+			
+//			f('#box li').on('click',function(e) {
+//				console.log(this.innerHTML);
+//			});
+//			f('#box li').eq(0).on('click',function(e) {
+//				console.log('我只有第一个li才会触发');
+//			});
+//			f('#box li').eq(0).off('click');//解除事件绑定
+			
+			
+			f("body").on('click','#box li',function(e) {
+				console.log('委托');
+			});
+			f("body").on('touchstart','#box li',function(e) {
+				console.log('touchstart');
+			});
+			
+			f("body").off('click',"#box li");//解除指定selector事件委托
+			
+			
+		</script>
+	</body>
+</html>
