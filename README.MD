@@ -25,21 +25,17 @@
 
 暂时有以下几个常见的想实现的功能
 
-> * 1.css 和 css3  操作 
-> * 2.class 操作
-> * 3.attr 操作
-> * 4.简单的dom选择
-> * 5.dom操作
-> * 6.ajax
-> * 7.each循环
-> * 8.after && before 插入
-> * 9.事件委托
-> * 10.tap实现
-> * 11.简单的一些手势
 - [x] 1.css 和 css3  操作
 - [x] 2.class 操作
 - [x] 3.attr 操作
-- [x] 新增 LaTex 公式编号功能
+- [x] 4.简单的dom选择
+- [x] 5.dom操作
+- [x] 6.ajax
+- [x] 7.each循环
+- [x] 8.after && before 插入
+- [x] 9.事件委托
+- [x] 10.tap实现
+- [x] 11.简单的一些手势（etouch）
 
 ### API文档
 
