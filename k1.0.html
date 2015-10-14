@@ -24,6 +24,7 @@
 				<li class="testLi">14</li>
 			</ul>
 		</div>
+		
 		<div id="pox">
 			<ul>
 				<li>pox</li>
@@ -48,23 +49,32 @@
 			
 			var body = document.getElementById("body");
 			
-//			f('#box li').on('click',function(e) {
-//				console.log(this.innerHTML);
-//			});
-//			f('#box li').eq(0).on('click',function(e) {
-//				console.log('我只有第一个li才会触发');
-//			});
+			f('#box li').on('click',function(e) {
+				console.log(this.innerHTML);
+			});
+			
+			f('#box li').eq(0).on('click',function(e) {
+				console.log('我只有第一个li才会触发');
+			});
+			f('#box li').eq(0).on('touchstart',function(e) {
+				console.log('我只有第一个li才会触发');
+			});
+			
 //			f('#box li').eq(0).off('click');//解除事件绑定
 			
 			
 			f("body").on('click','#box li',function(e) {
 				console.log('委托');
 			});
+			
 			f("body").on('touchstart','#box li',function(e) {
 				console.log('touchstart');
 			});
 			
-			f("body").off('click',"#box li");//解除指定selector事件委托
+			f("body").on('click','#box .ul span',function(e) {
+				/*code...*/ 
+			})
+			
 			
 			
 		</script>

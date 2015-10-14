@@ -241,21 +241,27 @@
 		//////////////////////
 		on: function(type, selector, fn) {
 			if (typeof selector == 'function') {
-				fn = selector;
+				fn = selector; //两个参数的情况
 				for (var i = 0; i < this.length; i++) {
-					if (!this[i].fguid) {
-						this[i].fguid = ++Kodo.fguid;
+					if (!this[i].guid) {
+						this[i].guid = ++Kodo.guid;
+						//guid 不存在，给当前dom一个guid
+						
+						Kodo.Events[Kodo.guid] = {}; 
+						//给Events[guid] 开辟一个新对象
+						
+						Kodo.Events[Kodo.guid][type] = [fn];
+						//给这个新对象，赋予事件数组 "click" : [fn1,...]
+						
+						bind(this[i], type, this[i].guid);//绑定事件
 
-						Kodo.Events[Kodo.fguid] = {};
-						Kodo.Events[Kodo.fguid][type] = [fn];
-
-						bind(this[i], type, this[i].fguid);
-
-					} else {
-						var id = this[i].fguid;
+					} else {//guid存在的情况
+						var id = this[i].guid;
 						if (Kodo.Events[id][type]) {
+							//如果这存在是当前事件已经存过，不用在绑定事件
 							Kodo.Events[id][type].push(fn);
 						} else {
+							//这是存新事件，所以需要重新绑定一次
 							Kodo.Events[id][type] = [fn];
 							bind(this[i], type, id);
 						}
@@ -288,19 +294,17 @@
 			if (arguments.length == 0) {
 				//如果没传参数，清空所有事件
 				for (var i = 0; i < this.length; i++) {
-					var id = this[i].fguid;
+					var id = this[i].guid;
 					for (var j in Kodo.Events[id]) {
 						Kodo.Events[id][j] = [];
 					}
 				}
-				return;
 			} else if (arguments.length == 1) {
 				//指定一个参数，则清空对应的事件
 				for (var i = 0; i < this.length; i++) {
-					var id = this[i].fguid;
+					var id = this[i].guid;
 					Kodo.Events[id][type] = [];
 				}
-				return;
 			} else {
 				for (var i = 0; i < this.length; i++) {
 					var id = this[i].fdid;
@@ -312,7 +316,7 @@
 	Kodo.prototype.init.prototype = Kodo.prototype;
 
 	Kodo.Events = []; //事件绑定存放的事件
-	Kodo.fguid = 0; //事件绑定的唯一标识
+	Kodo.guid = 0; //事件绑定的唯一标识
 
 	Kodo.deleEvents = []; //事件委托存放的事件
 	Kodo.fdid = 0; //事件委托的唯一标识 
@@ -344,10 +348,10 @@
 		}
 	}
 
-	function bind(dom, type, fguid) {
+	function bind(dom, type, guid) {
 		dom.addEventListener(type, function(e) {
-			for (var i = 0; i < Kodo.Events[fguid][type].length; i++) {
-				Kodo.Events[fguid][type][i].call(dom, e); //正确的dom回调
+			for (var i = 0; i < Kodo.Events[guid][type].length; i++) {
+				Kodo.Events[guid][type][i].call(dom, e); //正确的dom回调
 			}
 		}, false);
 	}
