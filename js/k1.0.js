@@ -269,16 +269,16 @@
 				}
 			} else {
 				for (var i = 0; i < this.length; i++) {
-					if (!this[i].fdid) {
-						this[i].fdid = ++Kodo.fdid;
+					if (!this[i].deleId) {
+						this[i].deleId = ++Kodo.deleId;
 
-						Kodo.deleEvents[Kodo.fdid] = {};
-						Kodo.deleEvents[Kodo.fdid][selector] = {};
-						Kodo.deleEvents[Kodo.fdid][selector][type] = [fn];
+						Kodo.deleEvents[Kodo.deleId] = {};
+						Kodo.deleEvents[Kodo.deleId][selector] = {};
+						Kodo.deleEvents[Kodo.deleId][selector][type] = [fn];
 
 						delegate(this[i], type, selector, fn);
 					} else {
-						var id = this[i].fdid;
+						var id = this[i].deleId;
 
 						if (Kodo.deleEvents[id][selector][type]) {
 							Kodo.deleEvents[id][selector][type].push(fn);
@@ -296,19 +296,19 @@
 				for (var i = 0; i < this.length; i++) {
 					var id = this[i].guid;
 					for (var j in Kodo.Events[id]) {
-						Kodo.Events[id][j] = [];
+						delete Kodo.Events[id][j];
 					}
 				}
 			} else if (arguments.length == 1) {
 				//指定一个参数，则清空对应的事件
 				for (var i = 0; i < this.length; i++) {
 					var id = this[i].guid;
-					Kodo.Events[id][type] = [];
+					delete Kodo.Events[id][type];
 				}
 			} else {
 				for (var i = 0; i < this.length; i++) {
-					var id = this[i].fdid;
-					Kodo.deleEvents[id][selector][type] = [];
+					var id = this[i].deleId;
+					delete Kodo.deleEvents[id][selector][type];
 				}
 			}
 		}
@@ -319,9 +319,9 @@
 	Kodo.guid = 0; //事件绑定的唯一标识
 
 	Kodo.deleEvents = []; //事件委托存放的事件
-	Kodo.fdid = 0; //事件委托的唯一标识 
+	Kodo.deleId = 0; //事件委托的唯一标识 
 	function delegate(agent, type, selector, fn) {
-		var id = agent.fdid;
+		var id = agent.deleId;
 		agent.addEventListener(type, function(e) {
 			var target = e.target;
 			var ctarget = e.currentTarget;
@@ -355,6 +355,7 @@
 			}
 		}, false);
 	}
+	
 		//////////////////////
 		///////新增事件部分////
 		//////////////////////
