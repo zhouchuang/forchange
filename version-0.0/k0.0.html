@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="box" style="color: red;">
+			<ul>
+				<li class="testLi">11</li>
+				<li class="testLi">12</li>
+				<li class="testLi">312</li>
+				<li class="testLi">11</li>
+				<li class="testLi">12</li>
+				<li class="testLi">312</li>
+				<li class="testLi">11</li>
+				<li class="testLi">12</li>
+				<li class="testLi">312</li>
+				<li class="testLi">312</li>
+				<li class="testLi">11</li>
+				<li class="testLi">12</li>
+			</ul>
+		</div>
+		<b class="one-b"></b>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		<script type="text/javascript">
+			(function(window,document) {
+				var w = window,
+					doc = document;
+				var Kodo = function(selector) {
+					return new Kodo.prototype.init(selector);
+				}
+				Kodo.prototype = {
+					constructor : Kodo,
+					length : 0,
+					splice: [].splice,
+					selector : '',
+					init : function(selector) {//dom选择的一些判断
+						if(!selector) { return this; }
+						
+						var selector = selector.trim(),
+							elm;
+							
+						if (selector.charAt(0) == '#' && !selector.match('\\s')) {
+							selector = selector.substring(1);
+							this.selector = selector;
+							elm = doc.getElementById(selector);
+							
+							this[0] = elm;
+							this.length = 1;
+							return this;
+						} else {
+							elm = doc.querySelectorAll(selector);
+							for (var i = 0; i < elm.length; i++) {
+								this[i] = elm[i];
+							}
+							
+							this.selector = selector;
+							this.length = elm.length;
+							return this;
+						}
+					}
+					
+				}
+				Kodo.prototype.init.prototype = Kodo.prototype;
+				
+				Kodo.ajax = function() { //直接挂载方法  可k.ajax调用
+					console.log(this);
+				}
+				
+				window.f = Kodo;
+			})(window,document);
+			
+			console.log(f('li'))
+		</script>
+	</body>
+</html>

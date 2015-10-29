@@ -12,6 +12,7 @@
 		</style>
 	</head>
 	<body>
+		<button id="btn">创建一个dom</button>
 		<div id="box">
 			<div class="classA">
 				<div class="classB">
@@ -33,6 +34,9 @@
 	        <button class="btn-clear">.btn-clear</button>
 	    </div>
 		<script type="text/javascript">
+		$("#btn").click(function() {
+			$(".btn-wrap").append('<button class="btn-test">.btn-test</button>');
+		});
 			/**
 			 * @param {Object} agent 委托的dom对象
 			 * @param {String} type  事件类型
@@ -56,7 +60,9 @@
 			 */
 			function delegate(agent,type,selector,fn) {
 				//为了复杂的选择器实现
+				console.log(type);
 				agent.addEventListener(type,function(e) {
+					
 					var target = e.target;
 					var ctarget = e.currentTarget;
 					var bubble = true;
@@ -97,10 +103,17 @@
 				console.log('判断是否阻止默认事件');
 				console.log(e.currentTarget);
 			});
-			delegate(body,'click','.stop a',function(e) {
+			$(".btn-test").on('click',function(e) {
 				e.preventDefault();
-				console.log('判断是否阻止默认事件');
-			})
+				console.log('.btn-test');
+				console.log(e);
+			});
+			$("body").on('click','.btn-test',function(e) {
+				e.preventDefault();
+				console.log(e);
+				console.log('.btn-test委托');
+			});
+//			$("body").off('click','.btn-wrap');
 			/**
 			 *  delegate实现与jQuery实现,判断是否阻止默认事件
 			 *  结果相同
@@ -110,29 +123,29 @@
 			/**
 			 *  delegate实现与jQuery实现，冒泡target对比测试,阻止默认事件对比
 			 */
-			$("body").on('click','.btn-with-event-bubbling',function(e) {
-				console.log(e.target,'JQ---target');
-				console.log(e.currentTarget,'JQ---currentTarget');
-				return false;
-			});
-			$("body").on('click','.btn-wrap',function(e) {
-				//jq的事件代理  e.currentTarget 指向的是 .btn-wrap
-				console.log(e.target,'JQ---target');
-				console.log(e.currentTarget,'JQ---currentTarget');
-				console.log('jq冒泡触发');
-			});
-			delegate(body,'click','.btn-with-event-bubbling',function(e) {
-				console.log(e.currentTarget,'--------currentTarget');
-				console.log(e.target,'delegate---target');
-				console.log(e.currentTarget,'delegate---currentTarget');
-				return false;
-			});
-			delegate(body,'click','.btn-wrap',function(e) {
-				console.log('delegate冒泡触发');
-				console.log(e.target,'delegate---target');
-				console.log(e.currentTarget,'delegate---currentTarget');
-				//delegate事件代理  e.currentTarget 指向的是 body
-			});
+//			$("body").on('click','.btn-with-event-bubbling',function(e) {
+//				console.log(e.target,'JQ---target');
+//				console.log(e.currentTarget,'JQ---currentTarget');
+//				return false;
+//			});
+//			$("body").on('click','.btn-wrap',function(e) {
+//				//jq的事件代理  e.currentTarget 指向的是 .btn-wrap
+//				console.log(e.target,'JQ---target');
+//				console.log(e.currentTarget,'JQ---currentTarget');
+//				console.log('jq冒泡触发');
+//			});
+//			delegate(body,'click','.btn-with-event-bubbling',function(e) {
+//				console.log(e.currentTarget,'--------currentTarget');
+//				console.log(e.target,'delegate---target');
+//				console.log(e.currentTarget,'delegate---currentTarget');
+//				return false;
+//			});
+//			delegate(body,'click','.btn-wrap',function(e) {
+//				console.log('delegate冒泡触发');
+//				console.log(e.target,'delegate---target');
+//				console.log(e.currentTarget,'delegate---currentTarget');
+//				//delegate事件代理  e.currentTarget 指向的是 body
+//			});
 			/**
 			 * delegate实现与jQuery实现，冒泡target对比测试
 			 *   结果相同
