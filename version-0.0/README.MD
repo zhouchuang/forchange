@@ -16,7 +16,7 @@
 然后将我们所需要的代码和逻辑都写在里面避免全局变量的泛滥.
 
 接着我们来看看我们第一版里的代码.
- 
+
 ```javascript
 (function(window,document) {
     var w = window,
