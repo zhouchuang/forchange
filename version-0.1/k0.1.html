@@ -26,7 +26,7 @@
 					doc = document;
 				var Kodo = function(selector) {
 					return new Kodo.prototype.init(selector);
-				}
+				};
 				Kodo.prototype = {
 					constructor : Kodo,
 					length : 0,
@@ -70,7 +70,7 @@
 					hasClass : function(cls) {
 						var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
 						for (var i = 0; i < this.length; i++) {
-							if (this[i].className.match(reg)) return true
+							if (this[i].className.match(reg)) return true;
 								return false;
 						}
 						return this;
@@ -91,12 +91,12 @@
 						}
 						return this;
 					}
-				}
+				};
 				Kodo.prototype.init.prototype = Kodo.prototype;
 				
 				Kodo.ajax = function() { //直接挂载方法  可k.ajax调用
 					console.log(this);
-				}
+				};
 				
 				window.f = Kodo;
 			})(window,document);
