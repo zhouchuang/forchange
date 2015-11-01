@@ -27,7 +27,7 @@
 				
 				var Kodo = function(selector) {
 					return new Kodo.prototype.init(selector);
-				}
+				};
 				Kodo.prototype = {
 					constructor : Kodo,
 					length : 0,
@@ -120,19 +120,19 @@
 					    return a;
 					}
 					
-				}
+				};
 				Kodo.prototype.init.prototype = Kodo.prototype;
 				
 				Kodo.ajax = function() { //直接挂载方法  可k.ajax调用
 					console.log(this);
-				}
+				};
 				
 				function sibling(cur, dir) {
 					while ((cur = cur[dir]) && cur.nodeType !== 1) {}
 					return cur;
 				}
 				
-				window.f = Kodo;
+				w.f = Kodo;
 			})(window,document);
 			
 			console.log(f('li'))
