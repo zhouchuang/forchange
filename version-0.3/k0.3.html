@@ -35,12 +35,17 @@
 					selector : '1',
 					init : function(selector) {//dom选择的一些判断
 						if(!selector) { return this; }
-						
-						if( typeof selector == 'object') {
-							this[0] = selector;
-							this.length = 1;
-							return this;
-						}
+
+                        if( typeof selector == 'object') {
+                            for (var i = 0; i < selector.length; i++) {
+                                this[i] = selector[i];
+                            }
+                            this.length = selector.length;
+                            return this;
+                        } else if(typeof selector == 'function') {
+                            Kodo.ready(selector);
+                            return;
+                        }
 						
 						var selector = selector.trim(),
 							elm;
@@ -65,7 +70,6 @@
 						}
 					},
 					css : function(attr,val) {//链式测试
-						console.log(this.length);
 						for(var i = 0;i < this.length; i++) {
 							if(arguments.length == 1) {
 								return getComputedStyle(this[i],null)[attr];
@@ -131,7 +135,15 @@
 				
 				Kodo.ajax = function() { //直接挂载方法  可k.ajax调用
 					console.log(this);
-				}
+				};
+                Kodo.ready = function(fn) {
+
+                    doc.addEventListener('DOMContentLoaded',function() {
+                        fn && fn();
+                    },false);
+                    doc.removeEventListener('DOMContentLoaded',fn,true);
+
+                };
 				
 				function sibling(cur, dir) {
 				  while ((cur = cur[dir]) && cur.nodeType !== 1) {}
@@ -141,9 +153,15 @@
 				window.f = Kodo;
 			})(window,document);
 			
-			console.log(f('li'))
-			
-			
+			var lis = document.getElementsByTagName("li");
+
+            f(function() {
+
+            });
+            window.onload = function() {
+
+            };
+
 		</script>
 	</body>
 </html>

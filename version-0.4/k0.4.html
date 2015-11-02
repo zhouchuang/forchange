@@ -139,7 +139,12 @@
 					console.log(this);
 				}
 				Kodo.ready = function(fn) {
-					doc.addEventListener('DOMContentLoaded',fn,false);
+
+					doc.addEventListener('DOMContentLoaded',function() {
+						fn && fn();
+					},false);
+					doc.removeEventListener('DOMContentLoaded',fn,true);
+
 				}
 				Kodo.each = function(obj,callback) {
 					var len = obj.length,

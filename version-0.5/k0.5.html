@@ -198,14 +198,12 @@
 				
 				//工具方法
 				Kodo.ready = function(fn) {
-					// 修改
-					
+
 					doc.addEventListener('DOMContentLoaded',function() {
 						fn && fn();
 					},false);
 					doc.removeEventListener('DOMContentLoaded',fn,true);
 					
-					// 修改
 				}
 				Kodo.each = function(obj,callback) {
 					var len = obj.length,
