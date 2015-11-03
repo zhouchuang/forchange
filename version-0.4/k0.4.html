@@ -37,12 +37,14 @@
 					selector : '',
 					init : function(selector) {//dom选择的一些判断
 						if(!selector) { return this; }
-						
-						if( typeof selector == 'object') {
-							this[0] = selector;
-							this.length = 1;
+
+						if (typeof selector == 'object') {
+							for (var i = 0; i < selector.length; i++) {
+								this[i] = selector[i];
+							}
+							this.length = selector.length;
 							return this;
-						} else if(typeof selector == 'function') {
+						} else if (typeof selector == 'function') {
 							Kodo.ready(selector);
 							return;
 						}
@@ -131,13 +133,13 @@
 					    return a;
 					}
 					
-				}
+				};
 				Kodo.prototype.init.prototype = Kodo.prototype;
 				
 				//工具方法
 				Kodo.ajax = function() { //直接挂载方法  可k.ajax调用
 					console.log(this);
-				}
+				};
 				Kodo.ready = function(fn) {
 
 					doc.addEventListener('DOMContentLoaded',function() {
@@ -145,13 +147,13 @@
 					},false);
 					doc.removeEventListener('DOMContentLoaded',fn,true);
 
-				}
+				};
 				Kodo.each = function(obj,callback) {
 					var len = obj.length,
 						constru = obj.constructor,
 						i = 0;
 					
-					if(constru === window.f) {
+					if(constru === w.f) {
 						for (; i < len; i++) {
 							var val = callback.call(obj[i],i,obj[i]);
 							if(val === false) break;
@@ -168,7 +170,7 @@
 						}
 					}
 					
-				}
+				};
 				
 				function sibling(cur, dir) {
 				  while ((cur = cur[dir]) && cur.nodeType !== 1) {}
@@ -177,7 +179,7 @@
 				function isArray(obj) {
 				    return Array.isArray(obj);
 				}
-				window.f = Kodo;
+				w.f = Kodo;
 			})(window,document);
 			
 			
@@ -185,24 +187,24 @@
 			var b = {
 				'name' : 'haha',
 				'age' : 19
-			}
+			};
 			var c = ['a','b','c'];
 			
 			f.each(a,function(index,item) {
 				console.log(index + '----',item);
-			})
+			});
 			f.each(b,function(index,item) {
 				console.log(index + '----' +item);
-			})
+			});
 			f.each(c,function(index,item) {
 				console.log(index + '----' +item);
-			})
+			});
 			
 			f(function() {
 				dosomething1();
 				dosomething2();
 				dosomething3();
-			})
+			});
 			function dosomething1() {
 				console.log('do1');
 			}
@@ -212,10 +214,7 @@
 			function dosomething3() {
 				console.log('do3');
 			}
-			function isArray(obj) {
-			    return Array.isArray(obj);
-			}
-			
+
 			
 		</script>
 	</body>
