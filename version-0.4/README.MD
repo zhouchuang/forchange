@@ -10,7 +10,7 @@
 
 首先我们需要一个对数组进行验证的方法
 
-``javascript
+```javascript
 function isArray(obj) {
     return Array.isArray(obj);
 }
