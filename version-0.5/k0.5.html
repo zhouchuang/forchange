@@ -193,7 +193,7 @@
 					    return a;
 					}
 					
-				}
+				};
 				Kodo.prototype.init.prototype = Kodo.prototype;
 				
 				//工具方法
@@ -204,7 +204,7 @@
 					},false);
 					doc.removeEventListener('DOMContentLoaded',fn,true);
 					
-				}
+				};
 				Kodo.each = function(obj,callback) {
 					var len = obj.length,
 						constru = obj.constructor,
@@ -226,7 +226,7 @@
 							if(val === false) break;
 						}
 					}
-				}
+				};
 				Kodo.get = function(url,sucBack,complete) {
 					var options = {
 						url : url,
@@ -234,7 +234,7 @@
 						complete : complete
 					}
 					ajax(options);
-				}
+				};
 				Kodo.post = function(url,data,sucback,complete) {
 					var options = {
 						url : url,
@@ -242,9 +242,9 @@
 						data : data,
 						sucback	: sucback,
 						complete : complete
-					}
+					};
 					ajax(options);
-				}
+				};
 				function ajax(options) {
 					var defaultOptions = {
 						url: false, //ajax 请求地址
@@ -267,7 +267,7 @@
 					}
 					xhr.send(options.data ? options.data : null);
 					
-					function onStateChange(a) {
+					function onStateChange() {
 						if (xhr.readyState == 4) {
 							var result,
 								status = xhr.status;
@@ -301,31 +301,17 @@
 				function isArray(obj) {
 				    return Array.isArray(obj);
 				}
-				window.f = Kodo;
+				w.f = Kodo;
 			})(window,document);
 			
 			
-			
-			f(function() {
-				console.log(1);
-			})
-			
-			//2.用2个接口实现 
+			//2.用2个接口实现
 			f.get('test.txt',function(data) {
 				console.log(data);
 			})
 			f.post('test.txt',function(data) {
 				console.log(data);
 			})
-			$.get('test.txt',function(data) {
-				console.log(data);
-			},'json');
-			function domReady(fn) {
-				document.addEventListener('DOMContentLoaded',function() {
-					fn && fn();
-				},false);
-				document.removeEventListener('DOMContentLoaded',fn,false);
-			}
 		</script>
 	</body>
 </html>
