@@ -13,14 +13,13 @@
 				<li class="testLi">12</li>
 			</ul>
 		</div>
-		<div id="pox">
+		<div id="pox" class="on">
 			<ul>
-				<li>pox</li>
-				<li>pox</li>
+				<li class="a c">pox</li>
+				<li class="b">pox</li>
 				<li>pox</li><li>pox</li>
 				<li>pox</li>
 			</ul>
-		
 		</div>
 		
 		<div class="test">
@@ -30,16 +29,16 @@
 			<span class="test-span"></span>
 			<b>321</b>
 		</div>
-		<b class="one-b"></b>
+		<b class="one-b">one-b</b>
 		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 		<script type="text/javascript">
 			(function(window, document) {
-				var w = window,
-					doc = document;
-			
+                var w = window,
+                        doc = document;
+
 				var Kodo = function(selector, context) {
 					return new Kodo.prototype.init(selector, context);
-				}
+				};
 				Kodo.prototype = {
 					constructor: Kodo,
 					length: 0,
@@ -84,29 +83,23 @@
 							return this;
 						}
 					},
-					css: function(attr, val) { //链式测试
-						///////////////////
-						/////////修改//////
-						///////////////////
-						for (var i = 0; i < this.length; i++) {
-							if(typeof attr == 'string') {
-								console.log(attr);
-								if (arguments.length == 1) {
-									return getComputedStyle(this[i], null)[attr];
-								}
-								this[i].style[attr] = val;
-							} else {
-								var _this = this[i];
-								f.each(attr,function(attr,val) {
-									_this.style.cssText += '' + attr + ':' + val + ';';
-								});
-							}
-						}
-						///////////////////
-						/////////修改//////
-						///////////////////
-						return this;
-					},
+                    css: function(attr, val) { //链式测试
+
+                        for (var i = 0; i < this.length; i++) {
+                            if(typeof attr == 'string') {
+                                if (arguments.length == 1) {
+                                    return getComputedStyle(this[0], null)[attr];
+                                }
+                                this[i].style[attr] = val;
+                            } else {
+                                var _this = this[i];
+                                f.each(attr,function(attr,val) {
+                                    _this.style.cssText += '' + attr + ':' + val + ';';
+                                });
+                            }
+                        }
+                        return this;
+                    },
 					///////////////////
 					/////////新增//////
 					///////////////////
@@ -126,17 +119,35 @@
 						}	
 						return this;
 					},
+					data : function(attr, val) {
+						for (var i = 0; i < this.length; i++) {
+							if(typeof attr == 'string') {
+								if (arguments.length == 1) {
+									return this[i].getAttribute('data-' + attr);
+								}
+								this[i].setAttribute('data-' + attr,val);
+							} else {
+								var _this = this[i];
+								f.each(attr,function(attr,val) {
+									_this.setAttribute('data-' + attr,val);;
+								});
+							}
+						}
+						return this;
+					},
 					///////////////////
 					/////////新增//////
 					///////////////////
-					hasClass: function(cls) {
-						var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
-						/////////////fixed///////////////
-						if (this[0].className.match(reg)) return true;
-						else return false;
-						/////////////fixed///////////////
-						return this;
-					},
+                    hasClass : function(cls) {
+                        var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+                        var arr = [];
+                        for (var i = 0; i < this.length; i++) {
+                            if (this[i].className.match(reg)) arr.push(true);
+                                else arr.push(false);
+                        }
+                        if (arr.indexOf(true) != -1)  return true;
+                            else  return false;
+                    },
 					addClass: function(cls) {
 						var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
 						for (var i = 0; i < this.length; i++) {
@@ -202,7 +213,7 @@
 						a.length = i;
 						return a;
 					}
-				}
+				};
 				Kodo.prototype.init.prototype = Kodo.prototype;
 			
 				//工具方法
@@ -211,7 +222,7 @@
 						fn && fn();
 					}, false);
 					doc.removeEventListener('DOMContentLoaded', fn, true);
-				}
+				};
 				Kodo.each = function(obj, callback) {
 						var len = obj.length,
 							constru = obj.constructor,
@@ -234,7 +245,7 @@
 							}
 							
 						}
-					}
+					};
 				Kodo.get = function(url, sucBack, complete) {
 					var options = {
 						url: url,
@@ -242,7 +253,7 @@
 						complete: complete
 					}
 					ajax(options);
-				}
+				};
 				Kodo.post = function(url, data, sucback, complete) {
 					var options = {
 						url: url,
@@ -252,7 +263,7 @@
 						complete: complete
 					}
 					ajax(options);
-				}
+				};
 			
 				function ajax(options) {
 						var defaultOptions = {
@@ -319,20 +330,16 @@
 				function isArray(obj) {
 					return Array.isArray(obj);
 				}
-				window.f = Kodo;
+				w.f = Kodo;
 			})(window, document);
 			
-			
-			var bs = f('b');
-			console.log(bs);
-			f.each(bs,function(index,item) {
-				console.log(f(this));
-			})
-			console.log('//////////////////')
-			$.each(bs,function(index,item) {
-				console.log($(this));
-			})
-			var obj = {"width":'200px',"height":"200px","background":"green"};
+
+			var obj = {"width":'200px',"height":"200px","background-color":"green"};
+            f('#pox').css(obj);
+            console.log(f("#pox").hasClass('on'));
+            f("#pox").data({'id':'123','name':'name'});
+            f("#pox").attr('class','');
+//            $("#pox").css(obj);
 		</script>
 	</body>
 </html>
