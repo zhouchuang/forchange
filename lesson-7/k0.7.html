@@ -53,8 +53,10 @@
                 }
 
                 if (typeof selector == 'object') {
-                    this[0] = selector;
-                    this.length = 1;
+                    for (var i = 0; i < selector.length; i++) {
+                        this[i] = selector[i];
+                    }
+                    this.length = selector.length;
                     return this;
                 } else if (typeof selector == 'function') {
                     Kodo.ready(selector);
