@@ -24,7 +24,7 @@ css: function(attr, val) { //链式测试
     }
     return this;
 }
-```
+``` 
 
 在我们上一个版本中,没有对css方法传对象进行解析,在这我们要进行完善.
 
