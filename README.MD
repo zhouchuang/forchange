@@ -12,7 +12,6 @@
 - [x] 7.[新增html，remove，after，append，before方法](https://github.com/MeCKodo/forchange/tree/master/lesson-7)
 - [x] 8.[引入delegate机制](https://github.com/MeCKodo/forchange/tree/master/lesson-8)
 - [x] 9.[如何实现on与off](https://github.com/MeCKodo/forchange/tree/master/lesson-9)
-- [x] 10.[新增find,last,eq,get,first,ajax](https://github.com/MeCKodo/forchange/tree/master/lesson-10)
 
 ## 前言
 
