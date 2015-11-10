@@ -1,6 +1,18 @@
 # 可想造一个属于你自己的jQuery库?
 
-===
+---
+
+- [x] 0.[讲解基础框架格式](https://github.com/MeCKodo/forchange/tree/master/lesson-0)
+- [x] 1.[初步体验](https://github.com/MeCKodo/forchange/tree/master/lesson-1)
+- [x] 2.[新增next,prev,parent,parents](https://github.com/MeCKodo/forchange/tree/master/lesson-2)
+- [x] 3.[完善init方法](https://github.com/MeCKodo/forchange/tree/master/lesson-3)
+- [x] 4.[新增必备方法each](https://github.com/MeCKodo/forchange/tree/master/lesson-4)
+- [x] 5.[新增find,last,eq,get,first,ajax](https://github.com/MeCKodo/forchange/tree/master/lesson-5)
+- [x] 6.[完善hasClass和css 方法 新增data和attr方法](https://github.com/MeCKodo/forchange/tree/master/lesson-6)
+- [x] 7.[新增html，remove，after，append，before方法](https://github.com/MeCKodo/forchange/tree/master/lesson-7)
+- [x] 8.[引入delegate机制](https://github.com/MeCKodo/forchange/tree/master/lesson-8)
+- [x] 9.[如何实现on与off](https://github.com/MeCKodo/forchange/tree/master/lesson-9)
+- [x] 10.[新增find,last,eq,get,first,ajax](https://github.com/MeCKodo/forchange/tree/master/lesson-10)
 
 ## 前言
 
