@@ -49,10 +49,10 @@ on: function(type, selector, fn) {
                 //构造我们的事件数组
                 /*
                 *  如 Kodo.deleEvents["#box li"] = 
-                *  [
+                *  {
                 *       "click" : [fn1,fn2...],
                 *        "touchstart" : [fn1,fn2....]
-                *   ]
+                *   }
                 */
                 delegate(this[i],type,selector);
                 //用委托的方式进行绑定
