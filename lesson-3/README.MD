@@ -14,22 +14,26 @@ $(function() {
 在dom加载完毕后马上就执行,这样的方法会比onload更快,所以domReady对于我们来说一定是必不可少的
 
 我们在init方法中要新增以下判断
+
 ```javascript
 if(!selector) { return this; }
 
-if( typeof selector == 'object') {
+if (typeof selector == 'object') {
+    var selector = [selector];
     for (var i = 0; i < selector.length; i++) {
         this[i] = selector[i];
     }
     this.length = selector.length;
     return this;
-} else if(typeof selector == 'function') {
+} else if (typeof selector == 'function') {
     Kodo.ready(selector);
     return;
 }
 ```
 
-首先selector可能为object的情况,比如传入的是原生dom对象,dom数组对象.
+首先selector可能为object的情况,比如传入的是原生dom对象,dom数组对象. 另外要记得转为数组`var selector = [selector];
+
+因为有可能是一个元素比如是window,document等否则没法循环
 
 然后selector如果是function那我们就认为他是domReady
 

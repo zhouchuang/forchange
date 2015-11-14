@@ -39,6 +39,7 @@
                 }
 
                 if (typeof selector == 'object') {
+                    var selector = [selector];
                     for (var i = 0; i < selector.length; i++) {
                         this[i] = selector[i];
                     }
