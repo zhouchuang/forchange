@@ -36,7 +36,7 @@ css: function(attr, val) { //链式测试
 
 如果是对象`css({"width":'100px','height':'200px'})`
 
-``javascript
+```javascript
 var _this = this[i];
 f.each(attr,function(attr,val) {
     _this.style.cssText += '' + attr + ':' + val + ';';
