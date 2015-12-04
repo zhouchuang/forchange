@@ -203,11 +203,15 @@
              * @param {Object} val
              * 新增
              */
-            hasClass: function (cls) {
+            hasClass : function(cls) {
                 var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
-                if (this[0].className.match(reg)) return true;
-                else return false;
-                return this;
+                var arr = [];
+                for (var i = 0; i < this.length; i++) {
+                    if (this[i].className.match(reg)) arr.push(true);
+                    else arr.push(false);
+                }
+                if (arr.indexOf(true) != -1)  return true;
+                else  return false;
             },
             addClass: function (cls) {
                 var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');

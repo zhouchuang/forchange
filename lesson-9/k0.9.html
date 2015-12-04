@@ -340,10 +340,10 @@
 					if (filiter(agent, selector, target)) {
 						for (var i = 0; i < Kodo.deleEvents[id][selector][type].length; i++) {
 							bubble = Kodo.deleEvents[id][selector][type][i].call(target, e);
+							return bubble;
 						}
 					}
 					target = target.parentNode;
-					return bubble;
 				}
 			}, false);
 

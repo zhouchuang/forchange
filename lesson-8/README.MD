@@ -19,9 +19,9 @@ function delegate(agent,type,selector,fn) {
         while(bubble && target != ctarget) {
             if(filiter(agent,selector,target)) {
                 bubble = fn.call(target,e);
+                return bubble;
             }
             target = target.parentNode;
-            return bubble;
         }
     },false);
     function filiter(agent,selector,target) {
