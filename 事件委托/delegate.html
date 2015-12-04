@@ -87,8 +87,8 @@
 			var box = document.getElementById("box");
 			
             delegate(body, 'click', '.child', function (e) {
-                console.log('jQuery方法-----我是child!!!!');
                 return false;
+                //阻止冒泡
             });
 
 		</script>
