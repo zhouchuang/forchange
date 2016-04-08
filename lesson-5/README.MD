@@ -110,7 +110,7 @@ function ajax(options) {
         success: false, //数据成功返回后的回调方法
         complete: false //ajax完成后的回调方法
     };
-    for (i in defaultOptions) {
+    for (var i in defaultOptions) {
         if (options[i] === undefined) {
             options[i] = defaultOptions[i];
         }
