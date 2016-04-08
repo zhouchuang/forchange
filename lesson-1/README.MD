@@ -27,7 +27,7 @@ removeClass : function(cls) {
     var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
     for (var i = 0; i < this.length; i++) {
         if (this[i].className.match(reg))
-            this[i].className = this[i].className.replace(' ' + cls,'');
+            this[i].className = this[i].className.replace(cls,'');
     }
     return this;
 }
