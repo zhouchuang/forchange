@@ -71,11 +71,11 @@ hasClass : function(cls) {
     var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
     var arr = [];
     for (var i = 0; i < this.length; i++) {
-        if (this[i].className.match(reg)) arr.push(true);
-            else arr.push(false);
+        if (this[i].className.match(reg)) {
+            return true;
+        }
     }
-    if (arr.indexOf(true) != -1)  return true;
-        else  return false;
+    return false;
 }
 ```
 
@@ -95,7 +95,7 @@ attr : function(attr, val) {
         } else {
             var _this = this[i];
             f.each(attr,function(attr,val) {
-                _this.setAttribute(attr,val);;
+                _this.setAttribute(attr,val);
             });
         }
     }
@@ -111,7 +111,7 @@ data : function(attr, val) {
         } else {
             var _this = this[i];
             f.each(attr,function(attr,val) {
-                _this.setAttribute('data-' + attr,val);;
+                _this.setAttribute('data-' + attr,val);
             });
         }
     }
