@@ -2,11 +2,11 @@
 
 ===
 
-新增 html,append,before,after,remove
+新增 html,text,append,before,after,remove
 
 ```javascript
 html: function (value) {
-    if (value === undefined) {
+    if (value === undefined && this[0].nodeType === 1) {
         return this[0].innerHTML;
     } else {
         for (var i = 0; i < this.length; i++) {
@@ -14,6 +14,15 @@ html: function (value) {
         }
     }
     return this;
+},
+text: function (val) {
+    if (val === undefined && this[0].nodeType === 1) {
+        return this[0].innerText;
+    } else {
+        for (var i = 0; i < this.length; i++) {
+            this[i].innerText = val;
+        }
+    }
 }
 ```
 
