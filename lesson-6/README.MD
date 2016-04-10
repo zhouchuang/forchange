@@ -95,7 +95,7 @@ attr : function(attr, val) {
         } else {
             var _this = this[i];
             f.each(attr,function(attr,val) {
-                _this.setAttribute(attr,val);;
+                _this.setAttribute(attr,val);
             });
         }
     }
@@ -111,7 +111,7 @@ data : function(attr, val) {
         } else {
             var _this = this[i];
             f.each(attr,function(attr,val) {
-                _this.setAttribute('data-' + attr,val);;
+                _this.setAttribute('data-' + attr,val);
             });
         }
     }
